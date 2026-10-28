@@ -1,0 +1,91 @@
+# Componentes:
+#   configsvr -> Config Server (metadatos del cluster)      puerto 27017
+#   shard1    -> Shard 1 (replica set shard1ReplSet)         puerto 27018
+#   shard2    -> Shard 2 (replica set shard2ReplSet)         puerto 27019
+#   shard3    -> Shard 3 (replica set shard3ReplSet)         puerto 27020
+#   mongos    -> Router, punto de entrada para los clientes  puerto 27021
+#
+# Todos los contenedores comparten la red "mongo-cluster", por lo que se
+# resuelven entre sí por el nombre del servicio (ej. shard1:27018).
+#
+# Uso:
+#   docker compose -f docker/docker-compose.yml up -d
+#   ./scripts/init-cluster.sh
+
+services:
+  # ---------- Config Server ----------
+  configsvr:
+    image: mongo:7.0
+    container_name: configsvr
+    command: --configsvr --replSet configReplSet --port 27017
+    ports:
+      - 27017:27017
+    volumes:
+      - configsvr:/data/db
+    networks:
+      - mongo-cluster
+
+  # ---------- Shard 1 ----------
+  shard1:
+    image: mongo:7.0
+    container_name: shard1
+    command: --shardsvr --replSet shard1ReplSet --port 27018
+    ports:
+      - 27018:27018
+    volumes:
+      - shard1:/data/db
+    networks:
+      - mongo-cluster
+
+  # ---------- Shard 2 ----------
+  shard2:
+    image: mongo:7.0
+    container_name: shard2
+    command: --shardsvr --replSet shard2ReplSet --port 27019
+    ports:
+      - 27019:27019
+    volumes:
+      - shard2:/data/db
+    networks:
+      - mongo-cluster
+
+  # ---------- Shard 3 ----------
+  shard3:
+    image: mongo:7.0
+    container_name: shard3
+    command: --shardsvr --replSet shard3ReplSet --port 27020
+    ports:
+      - 27020:27020
+    volumes:
+      - shard3:/data/db
+    networks:
+      - mongo-cluster
+
+  # ---------- Router (mongos) ----------
+  # Se conecta al config server; los clientes se conectan a este servicio.
+  # restart: on-failure -> reintenta si arranca antes de que el config server
+  # esté inicializado.
+  mongos:
+    image: mongo:7.0
+    container_name: mongos
+    depends_on:
+      - configsvr
+      - shard1
+      - shard2
+      - shard3
+    command: mongos --configdb configReplSet/configsvr:27017 --bind_ip_all --port 27021
+    ports:
+      - 27021:27021
+    restart: on-failure
+    networks:
+      - mongo-cluster
+
+volumes:
+  configsvr:
+  shard1:
+  shard2:
+  shard3:
+
+networks:
+  mongo-cluster:
+    driver: bridge
