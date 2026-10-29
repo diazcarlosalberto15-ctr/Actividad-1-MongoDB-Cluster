@@ -66,6 +66,7 @@ La colección de esta práctica contiene ocho autos, por lo que sirve para compr
 
 ## Evidencias
 
-1. La carga y consulta de los ocho autos.
+1. La carga y consulta de los ocho autos.<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/5018902f-a3ff-4385-9f8d-8ed8d7a699e5" />
+
 2. La salida de `crud.js`, mostrando insertar, consultar, actualizar y eliminar.
 3. La salida de `db.cars.getShardDistribution()` para comprobar la distribución entre los tres shards.
