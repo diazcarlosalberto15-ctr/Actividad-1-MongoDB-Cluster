@@ -67,6 +67,5 @@ La colección de esta práctica contiene ocho autos, por lo que sirve para compr
 ## Evidencias
 
 1. La carga y consulta de los ocho autos.<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/5018902f-a3ff-4385-9f8d-8ed8d7a699e5" />
-
-2. La salida de `crud.js`, mostrando insertar, consultar, actualizar y eliminar.
+2. La salida de `crud.js`, mostrando insertar, consultar, actualizar y eliminar.<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/27addc8b-b070-4d70-91e2-d04ad2cd420b" /> <img width="1911" height="924" alt="image" src="https://github.com/user-attachments/assets/455317ee-4091-46f8-b578-a7d8756e56e8" />
 3. La salida de `db.cars.getShardDistribution()` para comprobar la distribución entre los tres shards.
