@@ -1,5 +1,10 @@
 Actividad 1: MongoDB Cluster
 
+**Equipo:**
+- Edgar Alejandro Gutierrez Carrillo - 385655
+- Carlos Alberto Díaz Sánchez - 385539
+- Emilio Gallardo Medrano - 385530
+
 ## Colección de autos
 
 La práctica utiliza la base de datos `agencia` y la colección `cars`. El clúster está compuesto por tres shards y un router `mongos`. Las operaciones se ejecutan a través del router, en el puerto `27021`.
